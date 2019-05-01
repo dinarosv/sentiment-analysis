@@ -7,7 +7,8 @@ import pandas as pd
 
 from time import time
 from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import Dense, Embedding, Dropout, LSTM
+from tensorflow.python.keras.layers import Dense, Embedding, Dropout, LSTM, Conv1D
+from tensorflow.python.keras import layers
 from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.preprocessing.text import Tokenizer
 from tensorflow.python.keras.preprocessing.sequence import pad_sequences
@@ -47,18 +48,24 @@ model.add(Embedding(input_dim=num_words,
                     input_length=max_tokens,
                     name='layer_embedding'))
 
-model.add(LSTM(units=128))
-model.add(Dropout(0.1))
+#model.add(LSTM(units=128, return_sequences=True))
+model.add(layers.Conv1D(256, 10, activation='relu'))
+#model.add(layers.GlobalMaxPooling1D())
+model.add(layers.Conv1D(128, 10, activation='relu'))
+model.add(layers.Conv1D(64, 10, activation='relu'))
+model.add(layers.GlobalMaxPooling1D())
+model.add(layers.Flatten())
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
-optimizer = Adam(lr=1e-3)
+optimizer = Adam(lr=0.005)
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
 
-model.fit(x_train_pad, y_train, validation_split=0.05, epochs=5, batch_size=128, callbacks=[tensorboard])
+model.fit(x_train_pad, y_train, validation_split=0.05, epochs=10, batch_size=5000, callbacks=[tensorboard])
 
-result = model.evaluate(x_test_pad, y_test)
+result = model.evaluate(x_test_pad, y_test, batch_size=4096)
+print(result)
 
-model.save('modelwithres.h5')
+model.save('modelwithres_test.h5')
