@@ -47,8 +47,7 @@ model.add(Embedding(input_dim=num_words,
                     input_length=max_tokens,
                     name='layer_embedding'))
 
-model.add(LSTM(units=128))
-model.add(Dropout(0.1))
+model.add(Dense(num_words, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
@@ -57,8 +56,8 @@ model.compile(loss='sparse_categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
 
-model.fit(x_train_pad, y_train, validation_split=0.05, epochs=5, batch_size=128, callbacks=[tensorboard])
+model.fit(x_train_pad, y_train, validation_split=0.05, epochs=5, batch_size=256, callbacks=[tensorboard])
 
 result = model.evaluate(x_test_pad, y_test)
 
-model.save('modelwithres.h5')
+model.save('linear.h5')
