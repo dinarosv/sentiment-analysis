@@ -48,13 +48,15 @@ model.add(Embedding(input_dim=num_words,
                     input_length=max_tokens,
                     name='layer_embedding'))
 
+model.add(LSTM(units=64))
+model.add(Dropout(0.5))
 model.add(LSTM(units=128))
-model.add(Dropout(0.1))
+model.add(Dropout(0.2))
 
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
-optimizer = Adam(lr=0.001)
+optimizer = Adam(lr=0.005)
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
