@@ -51,7 +51,7 @@ model.add(Embedding(input_dim=num_words,
 model.add(LSTM(units=64, return_sequences=True))
 model.add(Dropout(0.5))
 model.add(LSTM(units=128))
-model.add(Dropout(0.2))
+model.add(Dropout(0.1))
 
 model.add(Dense(3, activation='softmax'))
 
