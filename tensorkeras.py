@@ -42,9 +42,8 @@ x_test_pad = pad_sequences(x_test_tokens, maxlen=max_tokens,
 
 model = Sequential()
 
-embedding_size = 8
 model.add(Embedding(input_dim=num_words,
-                    output_dim=32,
+                    output_dim=32, # Embedding size
                     input_length=max_tokens,
                     name='layer_embedding'))
 model.add(Dropout(0.5))
