@@ -48,7 +48,7 @@ model.add(Embedding(input_dim=num_words,
                     input_length=max_tokens,
                     name='layer_embedding'))
 
-model.add(LSTM(units=64))
+model.add(LSTM(units=64, return_sequences=True))
 model.add(Dropout(0.5))
 model.add(LSTM(units=128))
 model.add(Dropout(0.2))
