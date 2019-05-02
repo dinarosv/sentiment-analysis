@@ -44,12 +44,12 @@ model = Sequential()
 
 embedding_size = 8
 model.add(Embedding(input_dim=num_words,
-                    output_dim=embedding_size,
+                    output_dim=32,
                     input_length=max_tokens,
                     name='layer_embedding'))
-
-model.add(LSTM(units=256, return_sequences=True))
-model.add(Dropout(0.6))
+model.add(Dropout(0.5))
+model.add(LSTM(units=256, return_sequences=True, recurrent_dropout=0.5))
+model.add(Dropout(0.5))
 model.add(LSTM(units=128))
 model.add(Dropout(0.2))
 
