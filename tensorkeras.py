@@ -1,7 +1,5 @@
-import matplotlib.pyplot as plt
 import tensorflow as tf
 import numpy as np
-from scipy.spatial.distance import cdist
 from sklearn.model_selection import train_test_split
 import pandas as pd
 
@@ -47,9 +45,9 @@ model.add(Embedding(input_dim=num_words,
                     input_length=max_tokens,
                     name='layer_embedding'))
 model.add(Dropout(0.5))
-model.add(LSTM(units=256, return_sequences=True, recurrent_dropout=0.5))
+model.add(LSTM(units=128, return_sequences=True, recurrent_dropout=0.5))
 model.add(Dropout(0.5))
-model.add(LSTM(units=128))
+model.add(LSTM(units=64))
 model.add(Dropout(0.2))
 
 model.add(Dense(3, activation='softmax'))
@@ -63,7 +61,7 @@ print(model.summary())
 
 model.fit(x_train_pad, y_train, validation_split=0.05, epochs=5, batch_size=2048, callbacks=[tensorboard])
 
-result = model.evaluate(x_test_pad, y_test, batch_size=4096)
+result = model.evaluate(x_test_pad, y_test, batch_size=2048)
 print(result)
 
 model.save('modelwithres_test.h5')
