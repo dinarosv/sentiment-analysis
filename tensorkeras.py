@@ -45,10 +45,10 @@ model.add(Embedding(input_dim=num_words,
                     input_length=max_tokens,
                     name='layer_embedding'))
 model.add(Dropout(0.5))
-model.add(LSTM(units=256, return_sequences=True, recurrent_dropout=0.5))
+model.add(LSTM(units=128, return_sequences=True, recurrent_dropout=0.5))
 model.add(Dropout(0.5))
-model.add(LSTM(units=128))
-model.add(Dropout(0.2))
+model.add(LSTM(units=64))
+model.add(Dropout(0.3))
 
 model.add(Dense(3, activation='softmax'))
 
