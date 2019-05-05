@@ -61,7 +61,7 @@ print(model.summary())
 
 model.fit(x_train_pad, y_train, validation_split=0.05, epochs=5, batch_size=2048, callbacks=[tensorboard])
 
-result = model.evaluate(x_test_pad, y_test, batch_size=2048)
+result = model.evaluate(x_test_pad, y_test, batch_size=1024)
 print(result)
 
 model.save('modelwithres_test.h5')
