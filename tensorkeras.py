@@ -49,12 +49,12 @@ model.add(Dropout(0.5))
 model.add(LSTM(units=128, return_sequences=True, recurrent_dropout=0.5))
 model.add(Dropout(0.5))
 model.add(LSTM(units=64))
-model.add(Dropout(0.3))
+model.add(Dropout(0.1))
 
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
-optimizer = Adam(lr=0.001)
+optimizer = Adam(lr=0.008)
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
