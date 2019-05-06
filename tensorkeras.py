@@ -54,7 +54,7 @@ model.add(Dropout(0.3))
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
-optimizer = Adam(lr=0.03)
+optimizer = Adam(lr=0.001)
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
