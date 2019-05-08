@@ -20,7 +20,7 @@ X = data["text"]
 y = data["sentiment"]
 
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=123)
-num_words = 10000
+num_words = 30000
 tokenizer = Tokenizer(num_words=num_words)
 tokenizer.fit_on_texts(x_train)
 x_train_tokens = tokenizer.texts_to_sequences(x_train)
@@ -32,7 +32,7 @@ num_tokens = np.array(num_tokens)
 max_tokens = np.mean(num_tokens) + 2 * np.std(num_tokens)
 max_tokens = int(max_tokens)
 
-pad = 'post'
+pad = 'pre'
 x_train_pad = pad_sequences(x_train_tokens, maxlen=max_tokens,
                             padding=pad, truncating=pad)
 x_test_pad = pad_sequences(x_test_tokens, maxlen=max_tokens,
@@ -53,7 +53,7 @@ model.add(Dropout(0.2))
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
-optimizer = Adam(lr=0.01)
+optimizer = Adam(lr=0.008)
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
