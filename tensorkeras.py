@@ -13,7 +13,7 @@ from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.callbacks import TensorBoard
 
 pd.set_option('max_colwidth', 300)
-data = pd.read_csv('mixed.csv', sep=';')
+data = pd.read_csv('baretweets.csv', sep=';')
 data.sample(20)
 
 X = data["text"]
@@ -41,13 +41,14 @@ x_test_pad = pad_sequences(x_test_tokens, maxlen=max_tokens,
 model = Sequential()
 
 model.add(Embedding(input_dim=num_words,
-                    output_dim=200, # Embedding size
+                    output_dim=128, # Embedding size
                     input_length=max_tokens,
                     name='layer_embedding'))
 
+model.add(Dropout(0.6))
 model.add(LSTM(units=128, return_sequences=True, recurrent_dropout=0.6))
 model.add(Dropout(0.6))
-model.add(LSTM(units=64, recurrent_dropout=0.5))
+model.add(LSTM(units=32, recurrent_dropout=0.5))
 model.add(Dropout(0.4))
 
 model.add(Dense(3, activation='softmax'))
