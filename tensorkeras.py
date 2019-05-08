@@ -32,7 +32,7 @@ num_tokens = np.array(num_tokens)
 max_tokens = np.mean(num_tokens) + 2 * np.std(num_tokens)
 max_tokens = int(max_tokens)
 
-pad = 'pre'
+pad = 'post'
 x_train_pad = pad_sequences(x_train_tokens, maxlen=max_tokens,
                             padding=pad, truncating=pad)
 x_test_pad = pad_sequences(x_test_tokens, maxlen=max_tokens,
@@ -46,9 +46,9 @@ model.add(Embedding(input_dim=num_words,
                     name='layer_embedding'))
 
 model.add(LSTM(units=128, return_sequences=True, recurrent_dropout=0.5))
-model.add(Dropout(0.2))
+model.add(Dropout(0.5))
 model.add(LSTM(units=64))
-model.add(Dropout(0.1))
+model.add(Dropout(0.2))
 
 model.add(Dense(3, activation='softmax'))
 
