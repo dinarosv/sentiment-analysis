@@ -13,7 +13,7 @@ from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.callbacks import TensorBoard
 
 pd.set_option('max_colwidth', 300)
-data = pd.read_csv('smixed.csv', sep=';')
+data = pd.read_csv('smixed.csv', sep=',')
 data.sample(20)
 
 X = data["text"]
