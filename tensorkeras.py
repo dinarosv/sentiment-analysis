@@ -13,7 +13,7 @@ from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.callbacks import TensorBoard
 
 pd.set_option('max_colwidth', 300)
-data = pd.read_csv('baretweets.csv', sep=';')
+data = pd.read_csv('smixed.csv', sep=';')
 data.sample(20)
 
 X = data["text"]
@@ -61,7 +61,7 @@ model.compile(loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 print(model.summary())
 
-model.fit(x_train_pad, y_train, validation_split=0.05, epochs=4, batch_size=1024, callbacks=[tensorboard])
+model.fit(x_train_pad, y_train, validation_split=0.05, epochs=7, batch_size=1024, callbacks=[tensorboard])
 
 result = model.evaluate(x_test_pad, y_test, batch_size=1024)
 print(result)
