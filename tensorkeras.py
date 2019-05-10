@@ -44,7 +44,7 @@ model.add(Embedding(input_dim=num_words,
                     output_dim=200, # Embedding size
                     input_length=max_tokens,
                     name='layer_embedding'))
-                    
+
 model.add(Dropout(0.5))
 model.add(LSTM(units=128, recurrent_dropout=0.6, return_sequences=True))
 model.add(Dropout(0.8))
@@ -60,7 +60,7 @@ model.compile(loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 print(model.summary())
 
-model.fit(x_train_pad, y_train, validation_split=0.05, epochs=1, batch_size=1024, callbacks=[tensorboard])
+model.fit(x_train_pad, y_train, validation_split=0.05, epochs=5, batch_size=1024, callbacks=[tensorboard])
 
 result = model.evaluate(x_test_pad, y_test, batch_size=1024)
 print(result)
