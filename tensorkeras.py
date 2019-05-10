@@ -20,7 +20,7 @@ X = data["text"]
 y = data["sentiment"]
 
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=123)
-num_words = 30000
+num_words = 10000
 tokenizer = Tokenizer(num_words=num_words)
 tokenizer.fit_on_texts(x_train)
 x_train_tokens = tokenizer.texts_to_sequences(x_train)
@@ -41,21 +41,18 @@ x_test_pad = pad_sequences(x_test_tokens, maxlen=max_tokens,
 model = Sequential()
 
 model.add(Embedding(input_dim=num_words,
-                    output_dim=200, # Embedding size
+                    output_dim=256, # Embedding size
                     input_length=max_tokens,
                     name='layer_embedding'))
 
-model.add(Dropout(0.5))
-model.add(LSTM(units=256, recurrent_dropout=0.6, return_sequences=True))
-model.add(Dropout(0.8))
-model.add(LSTM(units=128, recurrent_dropout=0.5))
-model.add(Dropout(0.6))
+model.add(LSTM(units=256, dropout=0.6, recurrent_dropout=0.6, return_sequences=True))
+model.add(LSTM(units=128, dropout=0.4, recurrent_dropout=0.4))
 
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
-optimizer = Adam(lr=0.005)
-model.compile(loss='sparse_categorical_crossentropy',
+optimizer = Adam(lr=0.008)
+model.compile(loss='categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
 print(model.summary())
