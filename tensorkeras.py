@@ -41,11 +41,10 @@ x_test_pad = pad_sequences(x_test_tokens, maxlen=max_tokens,
 model = Sequential()
 
 model.add(Embedding(input_dim=num_words,
-                    output_dim=256, # Embedding size
+                    output_dim=128, # Embedding size
                     input_length=max_tokens,
                     name='layer_embedding'))
 
-model.add(LSTM(units=256, dropout=0.6, recurrent_dropout=0.6, return_sequences=True))
 model.add(LSTM(units=128, dropout=0.4, recurrent_dropout=0.4))
 
 model.add(Dense(3, activation='softmax'))
@@ -57,7 +56,7 @@ model.compile(loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 print(model.summary())
 
-model.fit(x_train_pad, y_train, validation_split=0.05, epochs=4, batch_size=1024, callbacks=[tensorboard])
+model.fit(x_train_pad, y_train, validation_split=0.05, epochs=5, batch_size=1024, callbacks=[tensorboard])
 
 result = model.evaluate(x_test_pad, y_test, batch_size=1024)
 print(result)
