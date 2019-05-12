@@ -12,50 +12,52 @@ from tensorflow.python.keras.preprocessing.text import Tokenizer
 from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.callbacks import TensorBoard
 
-pd.set_option('max_colwidth', 300)
-data = pd.read_csv('baretweets.csv', sep=';')
-data.sample(20)
-
+# Load data
+data = pd.read_csv('ns_tweets.csv', sep=';')
 X = data["text"]
 y = data["sentiment"]
-
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=123)
+
+# Tokenizer
 num_words = 10000
 tokenizer = Tokenizer(num_words=num_words)
 tokenizer.fit_on_texts(x_train)
 x_train_tokens = tokenizer.texts_to_sequences(x_train)
 x_test_tokens = tokenizer.texts_to_sequences(x_test)
 
+# Padding
 num_tokens = [len(tokens) for tokens in x_train_tokens + x_test_tokens]
 num_tokens = np.array(num_tokens)
-
 max_tokens = np.mean(num_tokens) + 2 * np.std(num_tokens)
 max_tokens = int(max_tokens)
-
 pad = 'pre'
-x_train_pad = pad_sequences(x_train_tokens, maxlen=max_tokens,
-                            padding=pad, truncating=pad)
-x_test_pad = pad_sequences(x_test_tokens, maxlen=max_tokens,
-                           padding=pad, truncating=pad)
+x_train_pad = pad_sequences(x_train_tokens, maxlen=max_tokens, padding=pad, truncating=pad)
+x_test_pad = pad_sequences(x_test_tokens, maxlen=max_tokens, padding=pad, truncating=pad)
 
+# Model
 model = Sequential()
 
+# Embedding
 model.add(Embedding(input_dim=num_words,
                     output_dim=128, # Embedding size
                     input_length=max_tokens,
                     name='layer_embedding'))
 
+# Layers
 model.add(LSTM(units=128, dropout=0.4, recurrent_dropout=0.4))
-
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
+
+# Sette lossfunction og optimaliseringsfunksjon for modellen
 optimizer = Adam(lr=0.008)
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
+
 print(model.summary())
 
+# Trene modellen på treningssettet
 model.fit(x_train_pad, y_train, validation_split=0.05, epochs=5, batch_size=1024, callbacks=[tensorboard])
 
 result = model.evaluate(x_test_pad, y_test, batch_size=1024)
