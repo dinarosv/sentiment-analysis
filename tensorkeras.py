@@ -13,7 +13,7 @@ from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.callbacks import TensorBoard
 
 # Load data
-data = pd.read_csv('ns_tweets.csv', sep=';', error_bad_lines=False)
+data = pd.read_csv('two_labels.csv', sep=';', error_bad_lines=False)
 X = data["text"]
 y = data["sentiment"]
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=123)
