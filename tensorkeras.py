@@ -39,18 +39,18 @@ model = Sequential()
 
 # Embedding
 model.add(Embedding(input_dim=num_words,
-                    output_dim=128, # Embedding size
+                    output_dim=32, # Embedding size
                     input_length=max_tokens,
                     name='layer_embedding'))
 
 # Layers
-model.add(LSTM(units=128, dropout=0.4, recurrent_dropout=0.4))
+model.add(LSTM(units=12, dropout=0.2, recurrent_dropout=0.2))
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
 
 # Sette lossfunction og optimaliseringsfunksjon for modellen
-optimizer = Adam(lr=0.008)
+optimizer = Adam()
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
@@ -58,9 +58,9 @@ model.compile(loss='sparse_categorical_crossentropy',
 print(model.summary())
 
 # Trene modellen på treningssettet
-model.fit(x_train_pad, y_train, validation_split=0.05, epochs=5, batch_size=1024, callbacks=[tensorboard])
+model.fit(x_train_pad, y_train, validation_split=0.05, epochs=5, batch_size=512, callbacks=[tensorboard])
 
-result = model.evaluate(x_test_pad, y_test, batch_size=1024)
+result = model.evaluate(x_test_pad, y_test, batch_size=512)
 print(result)
 
-model.save('modelwithres_test.h5')
+model.save('visualize.h5')
