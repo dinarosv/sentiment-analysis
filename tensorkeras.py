@@ -13,7 +13,7 @@ from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.callbacks import TensorBoard
 
 # Load data
-data = pd.read_csv('mixed.csv', sep=';', error_bad_lines=False)
+data = pd.read_csv('ns_tweets.csv', sep=';', error_bad_lines=False)
 X = data["text"]
 y = data["sentiment"]
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=123)
@@ -39,7 +39,7 @@ model = Sequential()
 
 # Embedding
 model.add(Embedding(input_dim=num_words,
-                    output_dim=32, # Embedding size
+                    output_dim=200, # Embedding size
                     input_length=max_tokens,
                     name='layer_embedding'))
 
