@@ -44,7 +44,6 @@ model.add(Embedding(input_dim=num_words,
                     name='layer_embedding'))
 
 # Layers
-model.add(LSTM(units=64, dropout=0.4, recurrent_dropout=0.2, return_sequences=True))
 model.add(LSTM(units=32, dropout=0.2, recurrent_dropout=0.2))
 model.add(Dense(3, activation='softmax'))
 
