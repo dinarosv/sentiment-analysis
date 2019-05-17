@@ -19,7 +19,7 @@ y = data["sentiment"]
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=123)
 
 # Tokenizer
-num_words = 10000
+num_words = 30000
 tokenizer = Tokenizer(num_words=num_words)
 tokenizer.fit_on_texts(x_train)
 x_train_tokens = tokenizer.texts_to_sequences(x_train)
@@ -44,7 +44,7 @@ model.add(Embedding(input_dim=num_words,
                     name='layer_embedding'))
 
 # Layers
-model.add(LSTM(units=128, dropout=0.2, recurrent_dropout=0.2))
+model.add(LSTM(units=12, dropout=0.1, recurrent_dropout=0.1))
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
