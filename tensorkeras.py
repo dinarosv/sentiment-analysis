@@ -50,7 +50,7 @@ model.add(Dense(3, activation='softmax'))
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
 
 # Sette lossfunction og optimaliseringsfunksjon for modellen
-optimizer = Adam(lr=0.0001)
+optimizer = Adam(lr=0.0005)
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
