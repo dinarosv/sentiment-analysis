@@ -39,7 +39,7 @@ model = Sequential()
 
 # Embedding
 model.add(Embedding(input_dim=num_words,
-                    output_dim=8, # Embedding size
+                    output_dim=200, # Embedding size
                     input_length=max_tokens,
                     name='layer_embedding'))
 
