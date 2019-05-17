@@ -19,7 +19,7 @@ y = data["sentiment"]
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=123)
 
 # Tokenizer
-num_words = 30000
+num_words = 10000
 tokenizer = Tokenizer(num_words=num_words)
 tokenizer.fit_on_texts(x_train)
 x_train_tokens = tokenizer.texts_to_sequences(x_train)
@@ -39,7 +39,7 @@ model = Sequential()
 
 # Embedding
 model.add(Embedding(input_dim=num_words,
-                    output_dim=200, # Embedding size
+                    output_dim=8, # Embedding size
                     input_length=max_tokens,
                     name='layer_embedding'))
 
