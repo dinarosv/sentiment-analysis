@@ -44,7 +44,7 @@ model.add(Embedding(input_dim=num_words,
                     name='layer_embedding'))
 
 # Layers
-model.add(LSTM(units=64, dropout=0.6, recurrent_dropout=0.3))
+model.add(LSTM(units=64, dropout=0.5, recurrent_dropout=0.3))
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
@@ -58,7 +58,7 @@ model.compile(loss='sparse_categorical_crossentropy',
 print(model.summary())
 
 # Trene modellen på treningssettet
-model.fit(x_train_pad, y_train, validation_split=0.05, epochs=6, batch_size=512, callbacks=[tensorboard])
+model.fit(x_train_pad, y_train, validation_split=0.05, epochs=6, batch_size=256, callbacks=[tensorboard])
 
 result = model.evaluate(x_test_pad, y_test, batch_size=512)
 print(result)
