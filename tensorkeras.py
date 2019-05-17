@@ -58,7 +58,7 @@ model.compile(loss='sparse_categorical_crossentropy',
 print(model.summary())
 
 # Trene modellen på treningssettet
-model.fit(x_train_pad, y_train, validation_split=0.05, epochs=6, batch_size=256, callbacks=[tensorboard])
+model.fit(x_train_pad, y_train, validation_split=0.05, epochs=8, batch_size=256, callbacks=[tensorboard])
 
 result = model.evaluate(x_test_pad, y_test, batch_size=512)
 print(result)
