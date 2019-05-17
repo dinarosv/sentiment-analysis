@@ -39,12 +39,12 @@ model = Sequential()
 
 # Embedding
 model.add(Embedding(input_dim=num_words,
-                    output_dim=200, # Embedding size
+                    output_dim=8, # Embedding size
                     input_length=max_tokens,
                     name='layer_embedding'))
 
 # Layers
-model.add(LSTM(units=64, dropout=0.3, recurrent_dropout=0.1))
+model.add(LSTM(units=64, dropout=0.6, recurrent_dropout=0.3))
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
