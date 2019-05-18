@@ -18,8 +18,19 @@ X = data["text"]
 y = data["sentiment"]
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=123)
 
+# VALUES
+NUM_WORDS = 20000
+EMBEDDING_SIZE = 8
+UNITS = 128
+DROPOUT = 0.4
+R_DROPOUT = 0.2
+LR = 0.001
+EPOCHS = 5
+BATCHSIZE = 256
+MODELNAME = "model.h5"
+
 # Tokenizer
-num_words = 20000
+num_words = NUM_WORDS
 tokenizer = Tokenizer(num_words=num_words)
 tokenizer.fit_on_texts(x_train)
 x_train_tokens = tokenizer.texts_to_sequences(x_train)
@@ -39,18 +50,18 @@ model = Sequential()
 
 # Embedding
 model.add(Embedding(input_dim=num_words,
-                    output_dim=8, # Embedding size
+                    output_dim=EMBEDDING_SIZE, # Embedding size
                     input_length=max_tokens,
                     name='layer_embedding'))
 
 # Layers
-model.add(LSTM(units=128, dropout=0.4, recurrent_dropout=0.2))
+model.add(LSTM(units=UNITS, dropout=DROPOUT, recurrent_dropout=R_DROPOUT))
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
 
 # Sette lossfunction og optimaliseringsfunksjon for modellen
-optimizer = Adam()
+optimizer = Adam(lr=LR)
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
@@ -58,9 +69,9 @@ model.compile(loss='sparse_categorical_crossentropy',
 print(model.summary())
 
 # Trene modellen på treningssettet
-model.fit(x_train_pad, y_train, validation_split=0.05, epochs=5, batch_size=256, callbacks=[tensorboard])
+model.fit(x_train_pad, y_train, validation_split=0.05, epochs=EPOCHS, batch_size=BATCHSIZE, callbacks=[tensorboard])
 
-result = model.evaluate(x_test_pad, y_test, batch_size=512)
+result = model.evaluate(x_test_pad, y_test, batch_size=BATCHSIZE)
 print(result)
 
-model.save('visualize.h5')
+model.save(MODELNAME)
