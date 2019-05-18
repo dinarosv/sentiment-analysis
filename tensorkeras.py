@@ -21,7 +21,7 @@ x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random
 # VALUES
 NUM_WORDS = 20000
 EMBEDDING_SIZE = 8
-UNITS = 128
+UNITS = 64
 DROPOUT = 0.4
 R_DROPOUT = 0.2
 LR = 0.004
