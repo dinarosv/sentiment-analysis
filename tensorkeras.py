@@ -44,7 +44,7 @@ model.add(Embedding(input_dim=num_words,
                     name='layer_embedding'))
 
 # Layers
-model.add(LSTM(units=32, dropout=0.2, recurrent_dropout=0.2))
+model.add(LSTM(units=2, dropout=0, recurrent_dropout=0))
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
