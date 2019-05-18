@@ -24,6 +24,9 @@ NUM_WORDS = 10000
 UNITS = 64
 DROPOUT = 0.6
 R_DROPOUT = 0.3
+UNITS2 = 64
+DROPOUT2 = 0.6
+R_DROPOUT2 = 0.3
 LR = 0.01
 EPOCHS = 8
 BATCHSIZE = 256
@@ -55,7 +58,8 @@ model.add(Embedding(input_dim=num_words,
                     name='layer_embedding'))
 
 # Layers
-model.add(LSTM(units=UNITS, dropout=DROPOUT, recurrent_dropout=R_DROPOUT))
+model.add(LSTM(units=UNITS, dropout=DROPOUT, recurrent_dropout=R_DROPOUT, return_sequences=True))
+model.add(LSTM(units=UNITS2, dropout=DROPOUT2, recurrent_dropout=R_DROPOUT2))
 model.add(Dense(3, activation='softmax'))
 
 tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
