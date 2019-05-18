@@ -22,10 +22,10 @@ x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random
 NUM_WORDS = 20000
 EMBEDDING_SIZE = 8
 UNITS = 64
-DROPOUT = 0.4
-R_DROPOUT = 0.2
+DROPOUT = 0.6
+R_DROPOUT = 0.3
 LR = 0.004
-EPOCHS = 5
+EPOCHS = 6
 BATCHSIZE = 256
 MODELNAME = "model.h5"
 
